@@ -3,15 +3,37 @@
   "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
       "minikube": "none"
     },
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
+  "remoteEnv": {
+    // Pass GH_TOKEN from host → container. gh CLI uses it automatically, no `gh auth login` needed.
+    // Each user sets this once in VS Code User Settings (Ctrl+,):
+    //   "terminal.integrated.env.linux": { "GH_TOKEN": "ghp_yourTokenHere" }
+    // This is the ONLY supported method — shell exports (.bashrc/.profile) do NOT propagate reliably.
+    // Value is empty string if not set — gh CLI falls back to its normal auth flow.
+    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+  "mounts": [
+    {
+      "source": "devcontainer-gh-config-${devcontainerId}",
+      "target": "/home/vscode/.config/gh",
+      "type": "volume"
+    }
+  ],
   "customizations": {
     "vscode": {
+      "settings": {
+        "chat.agentSkillsLocations": {
+          ".github/skills": true
+        }
+      },
       "extensions": [
-        "ms-dotnettools.vscode-dotnet-modernize",
         "GitHub.copilot",
         "GitHub.copilot-chat",
         "ms-dotnettools.csharp",
@@ -26,6 +48,6 @@
       ]
     }
   },
-  "postCreateCommand": "printf '#!/bin/sh\\ndotnet dnx \"$@\"\\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && dotnet --version && dnx --help",
+  "postCreateCommand": "printf '#!/bin/sh\\ndotnet dnx \"$@\"\\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && gh extension install github/gh-copilot --force && dotnet --version && dnx --help",
   "remoteUser": "vscode"
 }
