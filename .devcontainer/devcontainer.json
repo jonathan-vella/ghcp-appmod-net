@@ -48,7 +48,7 @@
       ]
     }
   },
-"postCreateCommand": "printf '#!/bin/sh\ndotnet dnx \"$@\"\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && echo '✅ .NET SDK '$(dotnet --version)' ready' && echo '✅ dnx alias installed'",
+  "postCreateCommand": "printf '#!/bin/sh\ndotnet dnx \"$@\"\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && echo '✅ .NET SDK '$(dotnet --version)' ready' && echo '✅ dnx alias installed'",
   "postStartCommand": "gh extension install github/gh-copilot --force > /dev/null 2>&1; echo '✅ GitHub Copilot CLI extension installed'",
   "remoteUser": "vscode"
 }
