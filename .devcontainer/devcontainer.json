@@ -49,6 +49,6 @@
     }
   },
   "postCreateCommand": "printf '#!/bin/sh\ndotnet dnx \"$@\"\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && echo '✅ .NET SDK '$(dotnet --version)' ready' && echo '✅ dnx alias installed'",
-  "postStartCommand": "gh extension install github/gh-copilot --force > /dev/null 2>&1; echo '✅ GitHub Copilot CLI extension installed'",
+  "postStartCommand": "curl -fsSL https://gh.io/copilot-install | bash > /dev/null 2>&1 && echo '✅ GitHub Copilot CLI ready'",
   "remoteUser": "vscode"
 }
