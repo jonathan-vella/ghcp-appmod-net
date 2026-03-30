@@ -1,6 +1,6 @@
 {
   "name": "Contoso University - .NET Modernization",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:9.0",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
@@ -20,10 +20,12 @@
         "ms-azuretools.vscode-azureresourcegroups",
         "ms-kubernetes-tools.vscode-aks-tools",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
-        "ms-azuretools.vscode-containers"
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-azure-github-copilot",
+        "vscjava.migrate-java-to-azure"
       ]
     }
   },
-  "postCreateCommand": "dotnet --version",
+  "postCreateCommand": "printf '#!/bin/sh\\ndotnet dnx \"$@\"\\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && dotnet --version && dnx --help",
   "remoteUser": "vscode"
 }
