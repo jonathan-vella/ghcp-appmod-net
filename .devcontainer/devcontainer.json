@@ -48,6 +48,7 @@
       ]
     }
   },
-  "postCreateCommand": "printf '#!/bin/sh\\ndotnet dnx \"$@\"\\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && gh extension install github/gh-copilot --force && dotnet --version && dnx --help",
+  "postCreateCommand": "printf '#!/bin/sh\\ndotnet dnx \"$@\"\\n' | sudo tee /usr/local/bin/dnx > /dev/null && sudo chmod +x /usr/local/bin/dnx && dotnet --version && dnx --help",
+  "postStartCommand": "gh extension install github/gh-copilot --force || true",
   "remoteUser": "vscode"
 }
